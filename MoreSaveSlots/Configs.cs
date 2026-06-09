@@ -6,7 +6,6 @@ namespace MoreSaveSlots
     {
         internal static ConfigEntry<int> numPages;
 
-
         internal static void InitializeConfigs()
         {
             var config = MSS_Plugin.Instance.Config;
