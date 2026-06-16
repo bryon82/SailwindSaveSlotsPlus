@@ -9,6 +9,8 @@ namespace MoreSaveSlots
 {
     internal class SaveMenuPatches
     {
+        private static TextMesh _nandTweaksLabelText = null;
+
         [HarmonyPatch(typeof(SaveSlots), "Awake")]
         private class SaveSlotsPatches
         {
@@ -38,21 +40,94 @@ namespace MoreSaveSlots
             [HarmonyPatch("Start")]
             public static void InitializeSaveSlotsUI(StartMenu __instance, GameObject ___saveSlotUI)
             {
-                SaveSlotsUI.InitializeUI(___saveSlotUI);
+                SaveSlotsUI.InitializeUI(___saveSlotUI, __instance.backupSavesUI);
                 Paginator.AddMoreSaveSlots(__instance.backupSavesUI, ___saveSlotUI.GetComponentsInChildren<StartMenuButton>(true));
+            }
+
+            [HarmonyPostfix]
+            [HarmonyPatch("EnableSlotMenu")]
+            public static void GetLabelText(GameObject ___saveSlotUI)
+            {
+                if (_nandTweaksLabelText == null)
+                    _nandTweaksLabelText = ___saveSlotUI.transform.Find("label text").GetComponent<TextMesh>();
             }
 
             [HarmonyPrefix]
             [HarmonyPatch("ButtonClick", typeof(StartMenuButtonType))]
-            public static bool ButtonClickPatch(StartMenuButtonType button)
+            public static bool ButtonClickPatch(StartMenuButtonType button, GameObject ___saveSlotUI)
             {
-                return Paginator.ButtonClick(button);
+                if (button == SaveSlotsUI.PREVIOUS_BUTTON)
+                    Paginator.PreviousButtonClicked();
+
+                else if (button == SaveSlotsUI.NEXT_BUTTON)
+                    Paginator.NextButtonClicked();
+
+                else if (button == SaveSlotsUI.RENAME_BUTTON)
+                    FileMenu.RenameButtonClicked();
+
+                else if (button == SaveSlotsUI.COPY_BUTTON)
+                {
+                    FileMenu.CopyButtonClicked();
+                    SaveSlotsUI.CopyButtonClicked();
+                }                    
+
+                else if (button == SaveSlotsUI.PASTE_BUTTON)
+                    FileMenu.PasteButtonClicked();
+
+                else if (button == SaveSlotsUI.DELETE_BUTTON)
+                    FileMenu.DeleteButtonClicked();
+
+                else if (button == SaveSlotsUI.CONFIRM_DELETE_BUTTON)
+                    FileMenu.DeleteButtonConfirmClicked();
+
+                else if (button == SaveSlotsUI.CONFIRM_RENAME_BUTTON)
+                    FileMenu.ConfirmRenameButtonClicked();
+
+                else if (button == StartMenuButtonType.Back)
+                {
+                    FileMenu.ClearAwaitingDeleteConfirm();
+                    FileMenu.ResetCopySlotNum();
+                    SaveSlotsUI.ClearCopyClicked();
+                    SaveSlotsUI.HideFileMenu();
+                    SaveSlotsUI.HideRenameInput();
+                    return true;
+                }
+
+                else
+                    return true;
+
+                return false;
+            }
+        }
+
+        [HarmonyPatch(typeof(StartMenuButton))]
+        private class StartMenuButtonPatches
+        {
+            [HarmonyPostfix]
+            [HarmonyPatch("Awake")]
+            public static void AwakePatch(StartMenuButton __instance, StartMenuButtonType ___type)
+            {
+                if (___type == StartMenuButtonType.Slot)                
+                    Paginator.RefreshSlotText(__instance);
+            }
+
+            [HarmonyPostfix]
+            [HarmonyPatch("ExtraLateUpdate")]
+            public static void ExtraLateUpdatePatch(StartMenuButton __instance)
+            {
+                if (__instance.GetPrivateField<StartMenuButtonType>("type") != StartMenuButtonType.Slot)
+                    return;
+
+                if (__instance.GetPrivateField<bool>("isLookedAt") && Input.GetMouseButtonDown(1))
+                {                    
+                    SaveSlotsUI.ToggleFileMenu(__instance);
+                }
             }
         }
 
         [HarmonyPatch(typeof(BackupSavesListUI))]
         private class BackupSavesListUIPatches
-        {
+        {            
             [HarmonyPrefix]
             [HarmonyPatch("ShowList")]
             public static bool ShowList(StartMenuButton parentSlotButton, BackupSavesListUI __instance, ref int ___showingListFor)
@@ -61,6 +136,11 @@ namespace MoreSaveSlots
                 {
                     return false;
                 }
+
+                SaveSlotsUI.HideFileMenu();
+                SaveSlotsUI.HideRenameInput();
+                FileMenu.ClearAwaitingDeleteConfirm();
+                FileMenu.SetShowingListFor(parentSlotButton.saveSlot);
 
                 ___showingListFor = parentSlotButton.saveSlot;
                 bool active = false;
@@ -102,7 +182,7 @@ namespace MoreSaveSlots
                 }
 
                 Vector3 b;
-                if (___showingListFor % 6 == 4 && __instance.list.gameObject.activeInHierarchy)
+                if (___showingListFor % 6 == 4 && (__instance.list.gameObject.activeInHierarchy || SaveSlotsUI.FileMenuList.gameObject.activeInHierarchy))
                 {
                     SaveSlotsUI.PageNumTextMesh.gameObject.SetActive(false);
                     b = ___backButtonAltPos;
@@ -114,13 +194,17 @@ namespace MoreSaveSlots
                 }
                 __instance.backButton.parent.localPosition = Vector3.Lerp(__instance.backButton.parent.localPosition, b, Time.deltaTime * 8f);
 
-                if (___showingListFor % 6 == 1 && __instance.list.gameObject.activeInHierarchy)
+                if (___showingListFor % 6 == 1 && (__instance.list.gameObject.activeInHierarchy || SaveSlotsUI.FileMenuList.gameObject.activeInHierarchy))
                 {
                     __instance.chooseSlotText.SetActive(false);
+                    if (_nandTweaksLabelText != null && _nandTweaksLabelText.text != "")
+                        _nandTweaksLabelText.text = "";
                 }
                 else
                 {
                     __instance.chooseSlotText.SetActive(true);
+                    if (_nandTweaksLabelText != null && _nandTweaksLabelText.text != "Continue")
+                        _nandTweaksLabelText.text = "Continue";
                 }
 
                 return false;

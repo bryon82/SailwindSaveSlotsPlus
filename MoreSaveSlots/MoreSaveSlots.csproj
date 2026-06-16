@@ -35,13 +35,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Configs.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Utilities\Configs.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
+    <Compile Include="FileMenu.cs" />
     <Compile Include="MSS_Plugin.cs" />
+    <Compile Include="Patches\NewGamePatches.cs" />
+    <Compile Include="UI\NewGameUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Paginator.cs" />
-    <Compile Include="SaveMenuPatches.cs" />
-    <Compile Include="SaveSlotsUI.cs" />
+    <Compile Include="Patches\SaveMenuPatches.cs" />
+    <Compile Include="SaveNameInput.cs" />
+    <Compile Include="UI\SaveSlotsUI.cs" />
+    <Compile Include="Utilities\SlotPath.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
@@ -59,6 +64,10 @@
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>E:\SteamLibrary\steamapps\common\Sailwind\Sailwind_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\SteamLibrary\steamapps\common\Sailwind\Sailwind_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>E:\SteamLibrary\steamapps\common\Sailwind\Sailwind_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>

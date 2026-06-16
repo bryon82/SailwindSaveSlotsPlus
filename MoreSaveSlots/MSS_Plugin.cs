@@ -10,7 +10,7 @@ namespace MoreSaveSlots
     {
         public const string PLUGIN_GUID = "com.raddude.moresaveslots";
         public const string PLUGIN_NAME = "MoreSaveSlots";
-        public const string PLUGIN_VERSION = "1.0.0";
+        public const string PLUGIN_VERSION = "2.0.0";
 
         internal static MSS_Plugin Instance { get; private set; }
         private static ManualLogSource _logger;

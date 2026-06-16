@@ -12,7 +12,7 @@ namespace MoreSaveSlots
         internal const int SLOTS_PER_PAGE = 6;
         private static int _currentPage = 0;
         private static readonly List<GameObject> _allSlotRoots = new List<GameObject>();
-        private static BackupSavesListUI _backUpSavesListUI;
+        private static BackupSavesListUI _backUpSavesListUI;        
 
         public static void AddMoreSaveSlots(BackupSavesListUI backupSavesListUI, StartMenuButton[] existingButtons)
         {
@@ -36,24 +36,23 @@ namespace MoreSaveSlots
 
                 var btn = clone.GetComponentInChildren<StartMenuButton>();
                 if (btn != null)
-                {
                     btn.saveSlot = slot;
-                    RefreshSlotText(btn);
-                }
 
                 clone.SetActive(false);
                 _allSlotRoots.Add(clone);
             }
         }
 
-        private static void RefreshSlotText(StartMenuButton btn)
+        public static void RefreshSlotText(StartMenuButton btn)
         {
             if (SaveSlots.slotsActive != null
                 && btn.saveSlot < SaveSlots.slotsActive.Length
                 && SaveSlots.slotsActive[btn.saveSlot])
             {
-                var t = File.GetLastWriteTime(SaveSlots.GetSlotSavePath(btn.saveSlot));
-                btn.SetButtonText(t.ToShortTimeString() + "\n" + t.ToShortDateString());
+                string timestamp = btn.transform.parent.GetChild(1).GetComponent<TextMesh>().text;
+                string name = SaveNameInput.LoadName(btn.saveSlot);
+                string displayText = name != null ? $"{name}\n{timestamp}" : timestamp;
+                btn.SetButtonText(displayText);
             }
             else
             {
@@ -61,28 +60,35 @@ namespace MoreSaveSlots
             }
         }
 
-        public static bool ButtonClick(StartMenuButtonType button)
-        {
-            if (button == SaveSlotsUI.PREVIOUS_BUTTON)
-            {
-                _backUpSavesListUI.HideList();
-                _currentPage = Mathf.Max(0, _currentPage - 1);
-                SaveSlotsUI.UpdatePageNumText(_currentPage);
-                ShowPage(_currentPage);
-                return false;
-            }
-
-            if (button == SaveSlotsUI.NEXT_BUTTON)
-            {
-                _backUpSavesListUI.HideList();
-                _currentPage = Mathf.Min(numPages.Value - 1, _currentPage + 1);
-                SaveSlotsUI.UpdatePageNumText(_currentPage);
-                ShowPage(_currentPage);
-                return false;
-            }
-
-            return true;
+        public static void PreviousButtonClicked()
+        {            
+            SaveSlotsUI.HideFileMenu();
+            SaveSlotsUI.HideRenameInput();
+            _backUpSavesListUI.HideList();
+            _currentPage = Mathf.Max(0, _currentPage - 1);
+            SaveSlotsUI.SetTextColor(false, true);
+            SaveSlotsUI.SetTextColor(true, true);
+            if (_currentPage == 0)            
+                SaveSlotsUI.SetTextColor(true, false);
+            SaveSlotsUI.UpdatePageNumText(_currentPage);
+            ShowPage(_currentPage);
+            LogDebug($"Previous button clicked, showing page {_currentPage}");
         }
+
+        public static void NextButtonClicked()
+        {
+            SaveSlotsUI.HideFileMenu();
+            SaveSlotsUI.HideRenameInput();
+            _backUpSavesListUI.HideList();
+            _currentPage = Mathf.Min(numPages.Value - 1, _currentPage + 1);
+            SaveSlotsUI.SetTextColor(false, true);
+            SaveSlotsUI.SetTextColor(true, true);
+            if (_currentPage == numPages.Value - 1)
+                SaveSlotsUI.SetTextColor(false, false);
+            SaveSlotsUI.UpdatePageNumText(_currentPage);
+            ShowPage(_currentPage);
+            LogDebug($"Next button clicked, showing page {_currentPage}");
+        }        
 
         private static void ShowPage(int page)
         {
@@ -95,6 +101,28 @@ namespace MoreSaveSlots
 
             for (int i = startSlot; i < endSlot; i++)
                 _allSlotRoots[i].SetActive(true);
-        }        
+        }
+
+        internal static void RefreshSlot(int slot)
+        {   
+            var btn = GetStartMenuButtonForSlot(slot);
+            if (btn != null)
+            {
+                var lastWriteTime = File.GetLastWriteTime(SaveSlots.GetSlotSavePath(slot));
+                var buttonText = $"{lastWriteTime:t}\n{lastWriteTime:d}";
+                btn.SetButtonText(buttonText);
+            }
+                
+            RefreshSlotText(btn);            
+        }
+
+        internal static StartMenuButton GetStartMenuButtonForSlot(int slot)
+        {
+            if (slot < _allSlotRoots.Count)
+            {
+                return _allSlotRoots[slot].GetComponentInChildren<StartMenuButton>();
+            }
+            return null;
+        }
     }
 }
