@@ -1,9 +1,9 @@
 ﻿using HarmonyLib;
 using System.IO;
 using UnityEngine;
-using static MoreSaveSlots.MSS_Plugin;
+using static SaveSlotsPlus.SSP_Plugin;
 
-namespace MoreSaveSlots
+namespace SaveSlotsPlus
 {
     internal class SaveSlotsUI
     {

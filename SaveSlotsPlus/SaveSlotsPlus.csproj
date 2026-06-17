@@ -6,10 +6,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{509FA8A8-13F9-489C-8138-B3FCA6245F22}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>MoreSaveSlots</RootNamespace>
-    <AssemblyName>MoreSaveSlots</AssemblyName>
+    <RootNamespace>SaveSlotsPlus</RootNamespace>
+    <AssemblyName>SaveSlotsPlus</AssemblyName>
     <OutputPath>bin\Debug</OutputPath>
-    <ModName>MoreSaveSlots</ModName>
+    <ModName>SaveSlotsPlus</ModName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -38,7 +38,7 @@
     <Compile Include="Utilities\Configs.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="FileMenu.cs" />
-    <Compile Include="MSS_Plugin.cs" />
+    <Compile Include="SSP_Plugin.cs" />
     <Compile Include="Patches\NewGamePatches.cs" />
     <Compile Include="UI\NewGameUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

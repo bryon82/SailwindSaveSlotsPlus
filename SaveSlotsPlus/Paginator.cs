@@ -2,10 +2,10 @@
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using static MoreSaveSlots.Configs;
-using static MoreSaveSlots.MSS_Plugin;
+using static SaveSlotsPlus.Configs;
+using static SaveSlotsPlus.SSP_Plugin;
 
-namespace MoreSaveSlots
+namespace SaveSlotsPlus
 {
     internal class Paginator
     {

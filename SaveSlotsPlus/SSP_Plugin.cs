@@ -3,16 +3,16 @@ using BepInEx.Logging;
 using HarmonyLib;
 using System.Reflection;
 
-namespace MoreSaveSlots
+namespace SaveSlotsPlus
 {
     [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
-    public class MSS_Plugin : BaseUnityPlugin
+    public class SSP_Plugin : BaseUnityPlugin
     {
-        public const string PLUGIN_GUID = "com.raddude.moresaveslots";
-        public const string PLUGIN_NAME = "MoreSaveSlots";
-        public const string PLUGIN_VERSION = "2.0.0";
+        public const string PLUGIN_GUID = "com.raddude.saveslotsplus";
+        public const string PLUGIN_NAME = "SaveSlotsPlus";
+        public const string PLUGIN_VERSION = "2.1.0";
 
-        internal static MSS_Plugin Instance { get; private set; }
+        internal static SSP_Plugin Instance { get; private set; }
         private static ManualLogSource _logger;
 
         internal static void LogDebug(string message) => _logger.LogDebug(message);

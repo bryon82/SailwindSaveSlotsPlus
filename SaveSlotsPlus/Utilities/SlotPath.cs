@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MoreSaveSlots
+namespace SaveSlotsPlus
 {
     internal class SlotPath
     {

@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace MoreSaveSlots
+namespace SaveSlotsPlus
 {
     internal static class Extensions
     {

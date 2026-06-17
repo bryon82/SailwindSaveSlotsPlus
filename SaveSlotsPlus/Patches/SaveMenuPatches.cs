@@ -1,11 +1,10 @@
 ﻿using HarmonyLib;
-using System;
 using System.IO;
 using UnityEngine;
-using static MoreSaveSlots.Configs;
-using static MoreSaveSlots.MSS_Plugin;
+using static SaveSlotsPlus.Configs;
+using static SaveSlotsPlus.SSP_Plugin;
 
-namespace MoreSaveSlots
+namespace SaveSlotsPlus
 {
     internal class SaveMenuPatches
     {

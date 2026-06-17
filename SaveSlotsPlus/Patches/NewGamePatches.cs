@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 
-namespace MoreSaveSlots
+namespace SaveSlotsPlus
 {
     internal class NewGamePatches
     {

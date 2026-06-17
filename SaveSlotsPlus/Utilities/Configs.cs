@@ -1,6 +1,6 @@
 ﻿using BepInEx.Configuration;
 
-namespace MoreSaveSlots
+namespace SaveSlotsPlus
 {
     internal class Configs
     {
@@ -8,7 +8,7 @@ namespace MoreSaveSlots
 
         internal static void InitializeConfigs()
         {
-            var config = MSS_Plugin.Instance.Config;
+            var config = SSP_Plugin.Instance.Config;
 
             numPages = config.Bind(
                 "Settings",

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using static MoreSaveSlots.SlotPath;
-using static MoreSaveSlots.MSS_Plugin;
+using static SaveSlotsPlus.SlotPath;
+using static SaveSlotsPlus.SSP_Plugin;
 
-namespace MoreSaveSlots
+namespace SaveSlotsPlus
 {
     internal class SaveNameInput : MonoBehaviour
     {
