@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v2.2.0] - 2026-06-21
+
+### Added
+- Compatibility with PortableSaves.
+
 ## [v2.1.0] - 2026-06-17
 
 ### Changed

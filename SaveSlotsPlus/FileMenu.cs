@@ -56,9 +56,9 @@ namespace SaveSlotsPlus
                 TryCopy(SlotSavePath(_copySlotNum), SlotSavePath(_showingListFor));
                 TryCopy(SlotScreenshotPath(_copySlotNum), SlotScreenshotPath(_showingListFor));
                 TryCopy(SlotMetaPath(_copySlotNum), SlotMetaPath(_showingListFor));
-                for (int i = 1; i <= 5; i++)                
+                for (int i = 1; i <= 5; i++)
                     TryCopy(SlotBackupPath(_copySlotNum, i), SlotBackupPath(_showingListFor, i));
-                
+
                 var fromFolder = SlotModSavesDirPath(_copySlotNum);
                 var toFolder = SlotModSavesDirPath(_showingListFor);
                 if (Directory.Exists(fromFolder))
@@ -67,9 +67,9 @@ namespace SaveSlotsPlus
                     foreach (var file in Directory.GetFiles(fromFolder))
                     {
                         var destFile = Path.Combine(toFolder, Path.GetFileName(file));
-                        File.Copy(file, destFile, overwrite: true);
+                        File.Copy(file, destFile, true);
                     }
-                }                
+                }
 
                 SaveSlots.slotsActive[_showingListFor] = true;
                 SaveSlots.activeSlotsCount = System.Array.FindAll(SaveSlots.slotsActive, s => s).Length;
@@ -110,11 +110,11 @@ namespace SaveSlotsPlus
 
             var modFolder = SlotModSavesDirPath(_showingListFor);
             if (Directory.Exists(modFolder))
-                Directory.Delete(modFolder, recursive: true);
+                Directory.Delete(modFolder, true);
 
             SaveSlots.slotsActive[_showingListFor] = false;
             SaveSlots.activeSlotsCount = System.Array.FindAll(SaveSlots.slotsActive, s => s).Length;
-            
+
             Paginator.RefreshSlot(_showingListFor);
             SaveSlotsUI.ResetMaterial(_showingListFor);
             SaveSlotsUI.HideFileMenu();
