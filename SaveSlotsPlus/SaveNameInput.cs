@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using static SaveSlotsPlus.SlotPath;
 using static SaveSlotsPlus.SSP_Plugin;
+using static SaveSlotsPlus.Configs;
 
 namespace SaveSlotsPlus
 {
@@ -43,7 +44,7 @@ namespace SaveSlotsPlus
                         ResetCursorBlink();
                     }
                 }
-                else if (_currentText.Length < MAX_LENGTH)
+                else if (_currentText.Length < saveNameMaxLength.Value)
                 {
                     _currentText = _currentText.Insert(_cursorPos, c.ToString());
                     _cursorPos++;

@@ -15,15 +15,17 @@ Save slots are added by adding a configurable number of more pages of slots. Ins
 
 ### Save File Management
 
-#### Naming a New Save 
+All features are compatible with [PortableSaves](https://github.com/NANDbrew/PortableSaves).  
 
-When creating a new save, you can enter a name for the save. Enter the name for the save before clicking the starting region. 
+#### Naming a New Save
+
+When creating a new save, you can enter a name for the save. Enter the name for the save before clicking the starting region.  
 
 #### File Menu
 
 When you click continue and are brought to the screen to select a save slot, you can right click a slot to bring up the file menu. You will have different options available depending on if the slot you right clicked is an active save slot or not. If you have backup saves in the slot, right click the slot again to switch from the file menu back to the back saves list. The following is available in the file menu:
 
-- **Rename:** Clicking rename will present you with a text input for renaming a save. The save does not need to have a name to begin with to rename it. There is a max of 13 characters. The name for the save is kept in a new meta file along side your save (e.g., slot0.save will have a slot0.save.meta file). Click the confirm rename button once you are done entering in the new name for the save.
+- **Rename:** Clicking rename will present you with a text input for renaming a save. The save does not need to have a name to begin with to rename it. There is a max of 15 characters (configureable up to 20). The name for the save is kept in a new meta file along side your save (e.g., slot0.save will have a slot0.save.meta file). Click the confirm rename button once you are done entering in the new name for the save.
 
 - **Copy:** Clicking copy will select this save slot to be copied and will enable the paste button when an inactive\empty slot is right clicked.
 

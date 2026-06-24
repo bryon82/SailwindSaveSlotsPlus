@@ -12,7 +12,7 @@ namespace SaveSlotsPlus
     {
         public const string PLUGIN_GUID = "com.raddude.saveslotsplus";
         public const string PLUGIN_NAME = "SaveSlotsPlus";
-        public const string PLUGIN_VERSION = "2.2.2";
+        public const string PLUGIN_VERSION = "2.2.3";
 
         public const string PORTABLE_SAVES_GUID = "com.nandbrew.PortableSaves";
 

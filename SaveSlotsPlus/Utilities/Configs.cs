@@ -7,6 +7,7 @@ namespace SaveSlotsPlus
     {
         internal static ConfigEntry<int> numPages;
         internal static ConfigEntry<KeyCode> altClickKey;
+        internal static ConfigEntry<int> saveNameMaxLength;
 
         internal static void InitializeConfigs()
         {
@@ -24,6 +25,13 @@ namespace SaveSlotsPlus
                 "Alt Click Key",
                 KeyCode.Mouse1,
                 "Key to click on a save slot to open the file menu.");
+            saveNameMaxLength = config.Bind(
+                "Settings",
+                "Save Name Max Length",
+                15,
+                new ConfigDescription(
+                    "The maximum length of a save name.",
+                    new AcceptableValueRange<int>(1, 20)));
         }
     }
 }

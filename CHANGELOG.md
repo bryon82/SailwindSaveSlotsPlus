@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v2.2.3] - 2026-06-24
+
+### Changed
+- Max name length for a save slot is now configureable up to 20, default 15.
+
 ## [v2.2.2] - 2026-06-24
 
 ### Fixed
